@@ -1,5 +1,6 @@
 package mcvlc.springframework.RecipeProject.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import mcvlc.springframework.RecipeProject.domain.*;
 import mcvlc.springframework.RecipeProject.repositories.CategoryRepository;
 import mcvlc.springframework.RecipeProject.repositories.RecipeRepository;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -28,6 +30,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loading bootstrap data");
     }
 
     private List<Recipe> getRecipes() {
