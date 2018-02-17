@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Notes {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -11,7 +12,7 @@ public class Notes {
     @OneToOne
     private Recipe recipe;
 
-    @Lob //very long String, instead of 255
+    @Lob
     private String recipeNotes;
 
     public Long getId() {
