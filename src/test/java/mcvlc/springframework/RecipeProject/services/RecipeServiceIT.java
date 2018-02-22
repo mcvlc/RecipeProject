@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class RecipeServiceIT {
 
-    public static final String NEW_DESCRIPTION = "New description";
+    public static final String NEW_DESCRIPTION = "New Description";
 
     @Autowired
     RecipeService recipeService;
@@ -34,7 +34,7 @@ public class RecipeServiceIT {
 
     @Transactional
     @Test
-    public void testSaveOfDescription() throws Exception{
+    public void testSaveOfDescription() throws Exception {
         //given
         Iterable<Recipe> recipes = recipeRepository.findAll();
         Recipe testRecipe = recipes.iterator().next();

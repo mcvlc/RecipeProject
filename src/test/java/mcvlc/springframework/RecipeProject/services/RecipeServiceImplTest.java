@@ -20,7 +20,6 @@ import java.util.Spliterator;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
-
 public class RecipeServiceImplTest {
 
     RecipeServiceImpl recipeService;
@@ -57,7 +56,7 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipeCommandByIdTest() throws Exception{
+    public void getRecipeCommandByIdTest() throws Exception {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -83,8 +82,7 @@ public class RecipeServiceImplTest {
         HashSet receipesData = new HashSet();
         receipesData.add(recipe);
 
-        //when(recipeService.getRecipes()).thenReturn(receipesData);
-        when(recipeRepository.findAll()).thenReturn(receipesData);
+        when(recipeService.getRecipes()).thenReturn(receipesData);
 
         Set<Recipe> recipes = recipeService.getRecipes();
 
@@ -94,15 +92,17 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws Exception{
+    public void testDeleteById() throws Exception {
+
         //given
         Long idToDelete = Long.valueOf(2L);
 
         //when
         recipeService.deleteById(idToDelete);
 
+        //no 'when', since method has void return type
+
         //then
         verify(recipeRepository, times(1)).deleteById(anyLong());
     }
-
 }

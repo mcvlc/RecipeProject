@@ -17,22 +17,21 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
     @Before
     public void setUp() throws Exception {
         converter = new UnitOfMeasureCommandToUnitOfMeasure();
+
     }
 
     @Test
-    public void testNullParamter() throws Exception{
+    public void testNullParamter() throws Exception {
         assertNull(converter.convert(null));
     }
 
     @Test
-    public void testEmtyObject() throws Exception{
+    public void testEmptyObject() throws Exception {
         assertNotNull(converter.convert(new UnitOfMeasureCommand()));
     }
 
-
     @Test
     public void convert() throws Exception {
-
         //given
         UnitOfMeasureCommand command = new UnitOfMeasureCommand();
         command.setId(LONG_VALUE);
@@ -45,5 +44,7 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
         assertNotNull(uom);
         assertEquals(LONG_VALUE, uom.getId());
         assertEquals(DESCRIPTION, uom.getDescription());
+
     }
+
 }

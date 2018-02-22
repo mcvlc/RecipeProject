@@ -10,22 +10,19 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.Null;
 
 @Component
-public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure,UnitOfMeasureCommand> {
+public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure, UnitOfMeasureCommand> {
 
     @Synchronized
     @Nullable
     @Override
-    public UnitOfMeasureCommand convert(UnitOfMeasure source) {
+    public UnitOfMeasureCommand convert(UnitOfMeasure unitOfMeasure) {
 
-        if(source == null){
-            return null;
+        if (unitOfMeasure != null) {
+            final UnitOfMeasureCommand uomc = new UnitOfMeasureCommand();
+            uomc.setId(unitOfMeasure.getId());
+            uomc.setDescription(unitOfMeasure.getDescription());
+            return uomc;
         }
-
-        final UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-
-        unitOfMeasureCommand.setId(source.getId());
-        unitOfMeasureCommand.setDescription(source.getDescription());
-
-        return unitOfMeasureCommand;
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
 public class RecipeToRecipeCommandTest {
 
     public static final Long RECIPE_ID = 1L;
@@ -28,9 +29,9 @@ public class RecipeToRecipeCommandTest {
     @Before
     public void setUp() throws Exception {
         converter = new RecipeToRecipeCommand(
-                new NotesToNotesCommand(),
                 new CategoryToCategoryCommand(),
-                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()));
+                new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand()),
+                new NotesToNotesCommand());
     }
 
     @Test

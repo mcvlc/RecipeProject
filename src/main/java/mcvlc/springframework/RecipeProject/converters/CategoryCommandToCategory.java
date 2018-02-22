@@ -8,12 +8,13 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryCommandToCategory implements Converter<CategoryCommand, Category> {
+public class CategoryCommandToCategory implements Converter<CategoryCommand, Category>{
+
     @Synchronized
     @Nullable
     @Override
     public Category convert(CategoryCommand source) {
-        if(source == null){
+        if (source == null) {
             return null;
         }
 

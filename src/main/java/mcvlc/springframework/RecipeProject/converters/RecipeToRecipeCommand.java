@@ -2,23 +2,24 @@ package mcvlc.springframework.RecipeProject.converters;
 
 import lombok.Synchronized;
 import mcvlc.springframework.RecipeProject.commands.RecipeCommand;
+import mcvlc.springframework.RecipeProject.domain.Category;
 import mcvlc.springframework.RecipeProject.domain.Recipe;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RecipeToRecipeCommand implements Converter<Recipe,RecipeCommand> {
+public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
 
-    private final NotesToNotesCommand notesToNotesCommand;
-    private final CategoryToCategoryCommand categoryToCategoryCommand;
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final CategoryToCategoryCommand categoryConveter;
+    private final IngredientToIngredientCommand ingredientConverter;
+    private final NotesToNotesCommand notesConverter;
 
-
-    public RecipeToRecipeCommand(NotesToNotesCommand notesToNotesCommand, CategoryToCategoryCommand categoryToCategoryCommand, IngredientToIngredientCommand ingredientToIngredientCommand) {
-        this.notesToNotesCommand = notesToNotesCommand;
-        this.categoryToCategoryCommand = categoryToCategoryCommand;
-        this.ingredientToIngredientCommand = ingredientToIngredientCommand;
+    public RecipeToRecipeCommand(CategoryToCategoryCommand categoryConveter, IngredientToIngredientCommand ingredientConverter,
+                                 NotesToNotesCommand notesConverter) {
+        this.categoryConveter = categoryConveter;
+        this.ingredientConverter = ingredientConverter;
+        this.notesConverter = notesConverter;
     }
 
     @Synchronized
@@ -29,27 +30,29 @@ public class RecipeToRecipeCommand implements Converter<Recipe,RecipeCommand> {
             return null;
         }
 
-        final RecipeCommand recipe = new RecipeCommand();
+        final RecipeCommand command = new RecipeCommand();
+        command.setId(source.getId());
+        command.setCookTime(source.getCookTime());
+        command.setPrepTime(source.getPrepTime());
+        command.setDescription(source.getDescription());
+        command.setDifficulty(source.getDifficulty());
+        command.setDirections(source.getDirections());
+        command.setServings(source.getServings());
+        command.setSource(source.getSource());
+        command.setUrl(source.getUrl());
+        command.setImage(source.getImage());
+        command.setNotes(notesConverter.convert(source.getNotes()));
 
-        recipe.setId(source.getId());
-        recipe.setSource(source.getSource());
-        recipe.setServings(source.getServings());
-        recipe.setUrl(source.getUrl());
-        recipe.setCookTime(source.getCookTime());
-        recipe.setDescription(source.getDescription());
-        recipe.setDifficulty(source.getDifficulty());
-        recipe.setDirections(source.getDirections());
-        recipe.setNotes(notesToNotesCommand.convert(source.getNotes()));
-        recipe.setPrepTime(source.getPrepTime());
-
-        if (source.getCategories() != null && source.getCategories().size() > 0) {
+        if (source.getCategories() != null && source.getCategories().size() > 0){
             source.getCategories()
-                    .forEach(category -> recipe.getCategories().add(categoryToCategoryCommand.convert(category)));
+                    .forEach((Category category) -> command.getCategories().add(categoryConveter.convert(category)));
         }
-        if (source.getIngredients() != null && source.getIngredients().size() > 0) {
+
+        if (source.getIngredients() != null && source.getIngredients().size() > 0){
             source.getIngredients()
-                    .forEach(ingredient -> recipe.getIngredients().add(ingredientToIngredientCommand.convert(ingredient)));
+                    .forEach(ingredient -> command.getIngredients().add(ingredientConverter.convert(ingredient)));
         }
-        return recipe;
+
+        return command;
     }
 }

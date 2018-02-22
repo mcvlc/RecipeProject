@@ -17,33 +17,32 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
     UnitOfMeasureToUnitOfMeasureCommand converter;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         converter = new UnitOfMeasureToUnitOfMeasureCommand();
     }
 
     @Test
-    public void testNullParametr() throws Exception{
+    public void testNullObjectConvert() throws Exception {
         assertNull(converter.convert(null));
     }
 
     @Test
-    public void testEmptyObject() throws Exception{
+    public void testEmptyObj() throws Exception {
         assertNotNull(converter.convert(new UnitOfMeasure()));
     }
 
     @Test
-    public void convert() throws Exception{
+    public void convert() throws Exception {
         //given
         UnitOfMeasure uom = new UnitOfMeasure();
         uom.setId(LONG_VALUE);
         uom.setDescription(DESCRIPTION);
-
         //when
-        UnitOfMeasureCommand command = converter.convert(uom);
+        UnitOfMeasureCommand uomc = converter.convert(uom);
 
         //then
-        assertNotNull(command);
-        assertEquals(LONG_VALUE, command.getId());
-        assertEquals(DESCRIPTION, command.getDescription());
+        assertEquals(LONG_VALUE, uomc.getId());
+        assertEquals(DESCRIPTION, uomc.getDescription());
     }
+
 }
