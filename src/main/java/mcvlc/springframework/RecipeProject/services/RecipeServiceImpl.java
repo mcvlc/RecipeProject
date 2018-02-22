@@ -5,6 +5,7 @@ import mcvlc.springframework.RecipeProject.commands.RecipeCommand;
 import mcvlc.springframework.RecipeProject.converters.RecipeCommandToRecipe;
 import mcvlc.springframework.RecipeProject.converters.RecipeToRecipeCommand;
 import mcvlc.springframework.RecipeProject.domain.Recipe;
+import mcvlc.springframework.RecipeProject.exceptions.NotFoundException;
 import mcvlc.springframework.RecipeProject.repositories.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found. For ID value: " + l.toString());
         }
 
         return recipeOptional.get();

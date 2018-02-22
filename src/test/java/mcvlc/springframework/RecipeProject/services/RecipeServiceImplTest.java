@@ -5,6 +5,7 @@ import mcvlc.springframework.RecipeProject.commands.RecipeCommand;
 import mcvlc.springframework.RecipeProject.converters.RecipeCommandToRecipe;
 import mcvlc.springframework.RecipeProject.converters.RecipeToRecipeCommand;
 import mcvlc.springframework.RecipeProject.domain.Recipe;
+import mcvlc.springframework.RecipeProject.exceptions.NotFoundException;
 import mcvlc.springframework.RecipeProject.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,6 +54,17 @@ public class RecipeServiceImplTest {
         assertNotNull("Null recipe returned", recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+
     }
 
     @Test
